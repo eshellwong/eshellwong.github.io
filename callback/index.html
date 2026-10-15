@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
+<title>授权回调</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;max-width:720px;margin:12vh auto;padding:0 1.25rem;color:#17202a}h1{color:#176b5b}#code{display:block;overflow-wrap:anywhere;padding:1rem;background:#f1f5f4;border:1px solid #b9d2cb;border-radius:.5rem;font:1.1rem/1.6 ui-monospace,monospace}.note{color:#52616b}</style>
+</head>
+<body>
+<h1>授权回调完成</h1>
+<p id="status">正在读取授权结果…</p>
+<pre id="code" aria-live="polite"></pre>
+<p class="note">授权码只在此页面显示，不会保存到浏览器存储或发送到其他服务。请勿分享给他人。</p>
+<script>
+const params=new URLSearchParams(location.search);
+const code=params.get('code');
+const status=document.getElementById('status');
+const output=document.getElementById('code');
+if(code){status.textContent='收到授权码：';output.textContent=code;history.replaceState(null,'',location.pathname+location.hash)}
+else if(params.get('error')){status.textContent='授权未完成：'+params.get('error');history.replaceState(null,'',location.pathname+location.hash)}
+else{status.textContent='此页面用于接收授权平台返回的授权码。当前没有收到授权参数。'}
+</script>
+</body>
+</html>
